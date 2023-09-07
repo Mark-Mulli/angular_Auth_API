@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>net7.0</TargetFramework>
-    <Nullable>enable</Nullable>
+    <Nullable>disable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
@@ -13,4 +13,14 @@
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Remove="context\" />
+    <None Remove="models\" />
+    <None Remove="helpers\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="context\" />
+    <Folder Include="models\" />
+    <Folder Include="helpers\" />
+  </ItemGroup>
 </Project>
