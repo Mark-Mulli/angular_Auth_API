@@ -1,0 +1,16 @@
+{
+  "version": 2,
+  "dgSpecHash": "eMFDU7PsYG2028wGDJlu/idL+H/dj51byqzGDFiLcO6FDKNX55VEBpwqQVwyZPChMekHRK5Dc30wrwb2MiJx/w==",
+  "success": true,
+  "projectFilePath": "/Users/markmulli/Desktop/git/angular_auth_API/angular_auth_API/angular_auth_API.csproj",
+  "expectedPackageFiles": [
+    "/Users/markmulli/.nuget/packages/microsoft.aspnetcore.openapi/7.0.10/microsoft.aspnetcore.openapi.7.0.10.nupkg.sha512",
+    "/Users/markmulli/.nuget/packages/microsoft.extensions.apidescription.server/6.0.5/microsoft.extensions.apidescription.server.6.0.5.nupkg.sha512",
+    "/Users/markmulli/.nuget/packages/microsoft.openapi/1.4.3/microsoft.openapi.1.4.3.nupkg.sha512",
+    "/Users/markmulli/.nuget/packages/swashbuckle.aspnetcore/6.5.0/swashbuckle.aspnetcore.6.5.0.nupkg.sha512",
+    "/Users/markmulli/.nuget/packages/swashbuckle.aspnetcore.swagger/6.5.0/swashbuckle.aspnetcore.swagger.6.5.0.nupkg.sha512",
+    "/Users/markmulli/.nuget/packages/swashbuckle.aspnetcore.swaggergen/6.5.0/swashbuckle.aspnetcore.swaggergen.6.5.0.nupkg.sha512",
+    "/Users/markmulli/.nuget/packages/swashbuckle.aspnetcore.swaggerui/6.5.0/swashbuckle.aspnetcore.swaggerui.6.5.0.nupkg.sha512"
+  ],
+  "logs": []
+}
