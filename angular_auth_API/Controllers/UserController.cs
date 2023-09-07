@@ -32,6 +32,7 @@ namespace angular_auth_API.Controllers
                 return BadRequest();
             }
 
+            //username and password matches
             var user = await _authDbContext.Users.FirstOrDefaultAsync(x => x.Username == userObject.Username && x.Password == userObject.Password);
 
             if (user == null)
