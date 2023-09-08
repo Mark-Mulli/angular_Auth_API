@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using angular_auth_API.context;
 using angular_auth_API.helpers;
@@ -66,6 +68,12 @@ namespace angular_auth_API.Controllers
 
 
             //check passcode strength
+            var pass = checkPasswordStrength(userObject.Password);
+            if (!string.IsNullOrEmpty(pass))
+            {
+                return BadRequest(new { Message = pass.ToString() });
+            }
+
 
             //hash passcode
             userObject.Password = passwordHasher.hashPassword(userObject.Password);
@@ -90,6 +98,25 @@ namespace angular_auth_API.Controllers
         private async Task<bool> checkEmailExistAsync(string email)
         {
             return await _authDbContext.Users.AnyAsync(x => x.Email == email);
+        }
+
+        private string checkPasswordStrength(string password)
+        {
+            StringBuilder sb = new StringBuilder();
+
+            if (password.Length < 8)
+            {
+                sb.Append("Minumum password length should be 8" + Environment.NewLine);
+            }
+            if (!(Regex.IsMatch(password,"[a-z]") && Regex.IsMatch(password,"[A-Z]") && Regex.IsMatch(password,"[0-9]")))
+            {
+                sb.Append("Password should be alphanumeric" + Environment.NewLine);
+            }
+            if (!(Regex.IsMatch(password, "[!, @, #, $, %, ^, &, *, (, ), \\-, _, +, =, \\[, \\], {, }, \\|, \\, ;, :, ', \", ,, ., <, >, /, ?, `\n]")))
+            {
+                sb.Append("Password should contain special characters" + Environment.NewLine);
+            }
+            return sb.ToString();
         }
 
 
