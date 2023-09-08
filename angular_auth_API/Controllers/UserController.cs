@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using angular_auth_API.context;
+using angular_auth_API.helpers;
 using angular_auth_API.models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -52,7 +53,13 @@ namespace angular_auth_API.Controllers
             {
                 return BadRequest();
             }
+            //hash passcode
+            userObject.Password = passwordHasher.hashPassword(userObject.Password);
 
+            userObject.Role = "User";//as default
+            userObject.Token = "";//as default
+
+            //add to the db and save
             await _authDbContext.Users.AddAsync(userObject);
             await _authDbContext.SaveChangesAsync();
 

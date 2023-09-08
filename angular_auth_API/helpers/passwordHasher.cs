@@ -22,7 +22,7 @@ namespace angular_auth_API.helpers
 
 			rng.GetBytes(salt = new byte[SaltSize]);
 
-			var key = new Rfc2898DeriveBytes(password,salt,Iterations);
+			var key = new Rfc2898DeriveBytes(password, salt, Iterations);
 
 			var hash = key.GetBytes(HashSize);
 
@@ -36,6 +36,35 @@ namespace angular_auth_API.helpers
 			
 
 			return base64hash;
+		}
+
+
+		//method for verifying password
+
+		public static bool VerifyPassword(string password, string base64hash)
+		{
+			var hashBytes = Convert.FromBase64String(base64hash);
+
+			var salt = new byte[SaltSize];
+
+			Array.Copy(hashBytes, 0, salt, 0, SaltSize);
+
+			//get key
+			var key = new Rfc2898DeriveBytes(password, salt, Iterations);
+
+			byte[] hash = key.GetBytes(HashSize);
+
+			for (var i = 0; i < HashSize; i++)
+			{
+				if (hashBytes[i+SaltSize] != hash[i])
+				{
+					return false;
+				}
+
+			}
+
+			return true;
+
 		}
 
 
