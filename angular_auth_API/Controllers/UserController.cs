@@ -36,11 +36,17 @@ namespace angular_auth_API.Controllers
             }
 
             //username and password matches
-            var user = await _authDbContext.Users.FirstOrDefaultAsync(x => x.Username == userObject.Username && x.Password == userObject.Password);
+            var user = await _authDbContext.Users.FirstOrDefaultAsync(x => x.Username == userObject.Username);
 
             if (user == null)
             {
                 return NotFound(new { Message = "User not found!" });
+            }
+
+            if (!passwordHasher.VerifyPassword(userObject.Password, user.Password))
+            {
+                return BadRequest(new { Message = "Password is Incorrect" });
+
             }
 
             return Ok(new { Message = "Login Success!" });
