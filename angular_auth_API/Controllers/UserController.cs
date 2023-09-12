@@ -52,8 +52,10 @@ namespace angular_auth_API.Controllers
 
             }
 
+            user.Token = createJWT(user);
+
             return Ok(new {
-                Token = "",
+                Token = user.Token,
                 Message = "Login Success!" }); 
 
         }
