@@ -166,10 +166,13 @@ namespace angular_auth_API.Controllers
 
             //return as a string
             return jwtTokenHandler.WriteToken(token);
+        }
 
+        [HttpGet]
 
-
-
+        public async Task<ActionResult<User>> getAllUsers()
+        {
+            return Ok(await _authDbContext.Users.ToListAsync());
         }
 
 
