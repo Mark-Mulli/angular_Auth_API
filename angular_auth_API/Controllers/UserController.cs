@@ -149,6 +149,7 @@ namespace angular_auth_API.Controllers
                 new Claim(ClaimTypes.Name, $"{user.FirstName} {user.LastName}"),
             });
 
+            //create credentials
             var credentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256);
 
             //create token descriptor
@@ -163,6 +164,7 @@ namespace angular_auth_API.Controllers
 
             var token = jwtTokenHandler.CreateToken(tokenDescriptor);
 
+            //return as a string
             return jwtTokenHandler.WriteToken(token);
 
 
