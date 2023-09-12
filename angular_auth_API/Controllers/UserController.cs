@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
+using System.Security.Claims;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -9,6 +11,7 @@ using angular_auth_API.helpers;
 using angular_auth_API.models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -49,7 +52,9 @@ namespace angular_auth_API.Controllers
 
             }
 
-            return Ok(new { Message = "Login Success!" });
+            return Ok(new {
+                Token = "",
+                Message = "Login Success!" }); 
 
         }
 
@@ -123,6 +128,43 @@ namespace angular_auth_API.Controllers
                 sb.Append("Password should contain special characters" + Environment.NewLine);
             }
             return sb.ToString();
+        }
+        //JWT token
+        private string createJWT(User user)
+        {
+            var jwtTokenHandler = new JwtSecurityTokenHandler();
+
+            //create key
+
+            var key = Encoding.ASCII.GetBytes("veryverysecret.....");
+
+            //create identity
+            var identity = new ClaimsIdentity(new Claim[]
+            {
+                //payload existing of full names and role
+                new Claim(ClaimTypes.Role, user.Role),
+                new Claim(ClaimTypes.Name, $"{user.FirstName} {user.LastName}"),
+            });
+
+            var credentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256);
+
+            //create token descriptor
+
+            var tokenDescriptor = new SecurityTokenDescriptor
+            {
+                Subject = identity,
+                Expires = DateTime.Now.AddDays(1),
+                SigningCredentials = credentials
+            };
+
+
+            var token = jwtTokenHandler.CreateToken(tokenDescriptor);
+
+            return jwtTokenHandler.WriteToken(token);
+
+
+
+
         }
 
 
