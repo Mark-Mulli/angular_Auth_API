@@ -73,6 +73,7 @@ namespace angular_auth_API.Controllers
             {
                 return BadRequest(new { Message = "Username already exists!" });
             }
+
             //check email
             if (await checkEmailExistAsync(userObject.Email))
             {
