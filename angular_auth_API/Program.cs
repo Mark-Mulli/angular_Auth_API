@@ -1,5 +1,8 @@
-﻿using angular_auth_API.context;
+﻿using System.Text;
+using angular_auth_API.context;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -25,6 +28,25 @@ builder.Services.AddDbContext<appDbContext>(option =>
 {
     option.UseSqlServer(builder.Configuration.GetConnectionString("SqlServerConnStr"));
 });
+
+//cofigure service and make use of jwt tokens
+builder.Services.AddAuthentication(x =>
+{
+    x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+}).AddJwtBearer(x =>
+{
+    x.RequireHttpsMetadata = false;
+    x.SaveToken = true;
+    x.TokenValidationParameters = new TokenValidationParameters
+    {
+        ValidateIssuerSigningKey = true,
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("veryverysecret.....")),
+        ValidateAudience = false,
+        ValidateIssuer = false
+    };
+});
+
 
 var app = builder.Build();
 
